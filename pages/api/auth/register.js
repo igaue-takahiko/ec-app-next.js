@@ -16,8 +16,8 @@ export default async (req, res) => {
 const register = async (req, res) => {
     try {
         const { name, email, password, cf_password } = req.body
-        const errorMessage = valid(name, email, password, cf_password)
 
+        const errorMessage = valid(name, email, password, cf_password)
         if (errorMessage) {
             return res.status(400).json({ error: errorMessage })
         }
