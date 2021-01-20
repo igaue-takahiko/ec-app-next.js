@@ -14,7 +14,7 @@
 
 # production
 /build
-/next.config.json
+/next.config.js
 
 # misc
 .DS_Store

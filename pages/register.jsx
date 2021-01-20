@@ -1,12 +1,14 @@
-import React, { useState, useCallback, useContext } from 'react'
+import React, { useState, useCallback, useContext, useEffect } from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import valid from '../utils/valid';
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
 
 const Register = () => {
     const initialState = { name: "", email: "", password: "", cf_password: "" }
+    const router = useRouter()
 
     const [ userData, setUserData ] = useState(initialState)
     const { name, email, password, cf_password } = userData
@@ -33,6 +35,12 @@ const Register = () => {
         }
         return dispatch({ type: "NOTIFY", payload: { success: res.message } })
     }
+
+    useEffect(() => {
+      if (Object.keys(auth).length !== 0) {
+        router.push("/")
+      }
+    },[auth])
 
     return (
         <div>

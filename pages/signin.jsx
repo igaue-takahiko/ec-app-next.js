@@ -1,17 +1,20 @@
-import React,{ useState, useContext, useCallback } from 'react';
+import React,{ useState, useContext, useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
 import Cookie from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const Signin = () => {
   const initialState = { email: "", password: "" }
+  const router = useRouter()
 
     const [ userData, setUserData ] = useState(initialState)
     const { email, password, } = userData
 
     const [ state, dispatch ] = useContext(DataContext)
+    const { auth } = state
 
     const handleChangeInput = useCallback((e) => {
         const { name, value } = e.target
@@ -35,12 +38,18 @@ const Signin = () => {
             token: res.access_token,
             user: res.user,
         }})
-        Cookie.set('refreshToken', res.refresh_token, {
+        Cookie.set('refreshtoken', res.refresh_token, {
           path: 'api/auth/accessToken',
           expires: 7
         })
         localStorage.setItem('firstLogin', true)
     }
+
+    useEffect(() => {
+      if (Object.keys(auth).length !== 0) {
+        router.push("/")
+      }
+    },[auth])
 
     return (
         <div>
