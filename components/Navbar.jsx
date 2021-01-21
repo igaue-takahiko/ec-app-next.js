@@ -48,14 +48,14 @@ const Navbar = () => {
                 <Link href="/">
                     <a className="navbar-brand">T.I SHOP</a>
                 </Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" style={{ outline: "none" }} type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <Link href="/cart">
-                                <a className={"nav-link"  + isActive("/cart")}>
+                                <a className={"nav-link" + isActive("/cart")}>
                                     <i className="fas fa-shopping-cart" aria-hidden="true" /> Cart
                                 </a>
                             </Link>
@@ -64,7 +64,7 @@ const Navbar = () => {
                           Object.keys(auth).length === 0 ? (
                             <li className="nav-item">
                                 <Link href="/signin">
-                                    <a className={"nav-link"  + isActive("/signin")}>
+                                    <a className={"nav-link" + isActive("/signin")}>
                                         <i className="fas fa-user" aria-hidden="true" /> Sign in
                                     </a>
                                 </Link>
