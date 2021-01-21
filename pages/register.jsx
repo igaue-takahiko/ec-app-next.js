@@ -14,6 +14,7 @@ const Register = () => {
     const { name, email, password, cf_password } = userData
 
     const [ state, dispatch ] = useContext(DataContext)
+    const { auth } = state
 
     const handleChangeInput = useCallback((e) => {
         const { name, value } = e.target

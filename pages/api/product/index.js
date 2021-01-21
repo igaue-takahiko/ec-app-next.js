@@ -8,8 +8,6 @@ export default async (req, res) => {
     case "GET":
       await getProducts(req, res)
       break;
-    default:
-      break;
   }
 }
 
