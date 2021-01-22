@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Head from "next/head";
 import { getData } from '../../utils/fetchData';
+import { DataContext } from '../../store/globalState';
+import { addToCart } from '../../store/actions';
 
 const ProductDetail = (props) => {
   const [ product, setProduct ] = useState(props.product)
   const [ tab, setTab ] = useState(0)
+
+  const [ state, dispatch ] = useContext(DataContext)
+  const { cart } = state
+
+  const price = product.price.toLocaleString()
 
   const isActive = (index) => {
     if (tab === index) {
@@ -25,7 +32,7 @@ const ProductDetail = (props) => {
           src={product.images[tab].url} alt={product.images[tab].url}
         />
         <div className="row mx-0" style={{ cursor: "pointer" }}>
-          {product.image.map((img, index) => (
+          {product.images.map((img, index) => (
             <img
               className={`img-thumbnail rounded ${isActive(index)}`}
               style={{ height: 80, width: "20%" }}
@@ -35,9 +42,9 @@ const ProductDetail = (props) => {
           ))}
         </div>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-6" style={{ marginTop: 20 }}>
         <h2 className="text-uppercase">{product.title}</h2>
-        <h5 className="text-danger">¥{product.price}</h5>
+        <h5 className="text-danger">{`¥ ${price}`}</h5>
         <div className="row mx-0 d-flex justify-content-between">
           {
             product.inStock > 0
@@ -49,12 +56,12 @@ const ProductDetail = (props) => {
         <div className="my-2">{product.description}</div>
         <div className="my-2">
           {product.content}
-          {product.content}
-          {product.content}
         </div>
         <button
-          className="btn btn-dark d-block my-3"
+          className="btn btn-dark d-block my-3 w-50"
+          style={{ margin: "0 auto" }}
           type="button"
+          onClick={() => dispatch(addToCart(product, cart))}
         >
           Buy
         </button>
