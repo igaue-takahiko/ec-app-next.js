@@ -1,15 +1,26 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
 import { DataContext } from '../store/globalState';
 import { CartItem } from '../components';
 import { getData } from '../utils/fetchData';
 
+
 const Cart = () => {
-  const [ state, dispatch ] = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext)
   const { cart, auth } = state
 
   const [ total, setTotal ] = useState(0)
+  const [ address, setAddress ] = useState("")
+  const [ mobile, setMobile ] = useState("")
+
+  const inputAddress = useCallback((e) => {
+    setAddress(e.target.value)
+  },[setAddress])
+
+  const inputMobile = useCallback((e) => {
+    setMobile(e.target.value)
+  },[setMobile])
 
   if (cart.length === 0) {
     return (
@@ -56,44 +67,49 @@ const Cart = () => {
     }
   },[])
 
-    return (
-        <div className="row mx-auto">
-            <Head>
-              <title>Cart Page</title>
-            </Head>
-            <div className="col-md-8 text-secondary table-responsive my-3">
-              <h2 className="text-uppercase">Shopping Cart</h2>
-              <table className="table my-3">
-                <tbody>
-                  {
-                    cart.map((item) => (
-                      <CartItem key={item._id} item={item} dispatch={dispatch} cart={cart} />
-                    ))
-                  }
-                </tbody>
-              </table>
-            </div>
-            <div className="col-md-4 my-3 text-uppercase text-secondary">
-              <form>
-                <h2>shipping</h2>
-                <label htmlFor="address">Address</label>
-                <input
-                  className="form-control mb-2"
-                  type="text" id="address" name="address"
+  return (
+    <div className="row mx-auto">
+      <Head>
+        <title>Cart Page</title>
+      </Head>
+      <div className="col-md-8 text-secondary table-responsive my-3">
+        <h2 className="text-uppercase">Shopping Cart</h2>
+        <table className="table my-3">
+          <tbody>
+            {
+              cart.map((item) => (
+                <CartItem
+                  key={item._id} item={item} dispatch={dispatch}
+                  cart={cart}
                 />
-                <label htmlFor="mobile">Mobile</label>
-                <input
-                  className="form-control mb-2"
-                  type="text" id="mobile" name="mobile"
-                />
-              </form>
-              <h3>Total: <span className="text-danger">{`¥ ${total.toLocaleString()}`}</span></h3>
-              <Link href={auth.user ? "#" : "/signin"}>
-                <a className="btn btn-dark my-2">Password with payment</a>
-              </Link>
-            </div>
-        </div>
-    )
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <div className="col-md-4 my-3 text-uppercase text-secondary">
+        <form>
+          <h2>shipping</h2>
+          <label htmlFor="address">Address</label>
+          <input
+            className="form-control mb-2"
+            type="text" id="address" name="address"
+            value={address} onChange={inputAddress}
+          />
+          <label htmlFor="mobile">Mobile</label>
+          <input
+            className="form-control mb-2"
+            type="text" id="mobile" name="mobile"
+            value={mobile} onChange={inputMobile}
+          />
+        </form>
+        <h3>Total: <span className="text-danger">{`¥ ${total.toLocaleString()}`}</span></h3>
+        <Link href={auth.user ? "#!" : "/signin"}>
+          <a className="btn btn-dark my-2">Password with payment</a>
+        </Link>
+      </div>
+    </div>
+  )
 }
 
 export default Cart

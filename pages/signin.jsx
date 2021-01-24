@@ -13,7 +13,7 @@ const Signin = () => {
     const [ userData, setUserData ] = useState(initialState)
     const { email, password, } = userData
 
-    const [ state, dispatch ] = useContext(DataContext)
+    const { state, dispatch } = useContext(DataContext)
     const { auth } = state
 
     const handleChangeInput = useCallback((e) => {

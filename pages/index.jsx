@@ -6,20 +6,20 @@ import { ProductItem } from '../components';
 const Home = (props) => {
   const [ products, setProducts ] = useState(props.products)
 
-    return (
-        <div className="products">
-            <Head>
-              <title>Home Page</title>
-            </Head>
-            {
-              products.length === 0
-              ? <h2>No Product</h2>
-              : products.map((product) => (
-                <ProductItem key={product._id} product={product} />
-              ))
-            }
-        </div>
-    )
+  return (
+    <div className="products">
+      <Head>
+        <title>Home Page</title>
+      </Head>
+      {
+        products.length === 0
+        ? <h2>No Product</h2>
+        : products.map((product) => (
+          <ProductItem key={product._id} product={product} />
+        ))
+      }
+    </div>
+  )
 }
 
 export async function getServerSideProps() {

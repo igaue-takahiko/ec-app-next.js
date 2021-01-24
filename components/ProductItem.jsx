@@ -4,7 +4,7 @@ import { DataContext } from '../store/globalState';
 import { addToCart } from '../store/actions';
 
 const ProductItem = ({ product }) => {
-  const [ state, dispatch ] = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext)
   const { cart } = state
 
   const price = product.price.toLocaleString()

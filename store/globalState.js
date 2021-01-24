@@ -4,8 +4,14 @@ import { getData } from '../utils/fetchData';
 
 export const DataContext = createContext();
 
+const initialState = {
+  notify: {},
+  auth: {},
+  cart: [],
+  modal: {}
+};
+
 export const DataProvider = ({ children }) => {
-  const initialState = { notify: {}, auth: {}, cart: [] };
   const [ state, dispatch ] = useReducer(reducers, initialState);
   const { cart } = state
 
@@ -39,7 +45,7 @@ export const DataProvider = ({ children }) => {
   },[cart])
 
   return (
-    <DataContext.Provider value={[ state, dispatch ]}>
+    <DataContext.Provider value={{ state, dispatch }}>
       {children}
     </DataContext.Provider>
   );
