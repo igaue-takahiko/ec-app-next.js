@@ -25,9 +25,22 @@ const Navbar = () => {
     return router.push("/")
   }
 
+  const adminRouter = () => {
+    return (
+      <>
+      <Link href="/users">
+        <a className="dropdown-item">Users</a>
+      </Link>
+      </>
+    )
+  }
+
   const loggedRouter = () => (
     <li className="nav-item dropdown">
-      <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a
+        className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+      >
         <img
           style={{
             borderRadius: "50%", width: 30, height: 30,
@@ -37,8 +50,12 @@ const Navbar = () => {
         /> {auth.user.name}
       </a>
       <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <p className="dropdown-item" style={{ cursor: "pointer" }} >Profile</p>
-        <p className="dropdown-item" style={{ cursor: "pointer" }} onClick={handleLogout}>Logout</p>
+        <Link href="/profile">
+          <a className="dropdown-item" style={{ cursor: "pointer" }} >Profile</a>
+        </Link>
+        {auth.user.role === "admin" && adminRouter()}
+        <div className="dropdown-divider" />
+        <button className="dropdown-item" style={{ cursor: "pointer" }} onClick={handleLogout}>Logout</button>
       </div>
     </li>
   )
@@ -47,7 +64,7 @@ const Navbar = () => {
     <>
       <nav
         className="navbar navbar-expand-lg navbar-light bg-light"
-        style={{ position: "sticky", top: 0, zIndex: 5, boxShadow: "0 2px 4px 0 rgba(0, 0, 0, .3)" }}
+        style={{ position: "sticky", top: 0, zIndex: 10, boxShadow: "0 2px 4px 0 rgba(0, 0, 0, .3)" }}
       >
         <Link href="/">
             <a className="navbar-brand ml-4">T.I SHOP</a>

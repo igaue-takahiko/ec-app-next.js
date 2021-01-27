@@ -93,7 +93,7 @@ const Cart = () => {
         ...res.newOrder,
         user: auth.user
       }
-      dispatch({ type: "ADD_ORDERS", payload: [...orders, newOrder] })
+      dispatch({ type: "ADD_ORDERS", payload: [ ...orders, newOrder ] })
       dispatch({ type: "NOTIFY", payload: { success: res.message } })
       return router.push(`/order/${res.newOrder._id}`)
     })

@@ -25,3 +25,6 @@ img {
 
 /*------------------ product --------------------*/
 @import url('./product.css');
+
+/* ----------- Profile ------------- */
+@import url("./profile.css");
