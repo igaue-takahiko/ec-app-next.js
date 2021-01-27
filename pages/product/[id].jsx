@@ -8,7 +8,7 @@ const ProductDetail = (props) => {
   const [ product, setProduct ] = useState(props.product)
   const [ tab, setTab ] = useState(0)
 
-  const [ state, dispatch ] = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext)
   const { cart } = state
 
   const price = product.price.toLocaleString()

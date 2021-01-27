@@ -1,4 +1,4 @@
-import React,{ useContext } from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router';
 import { DataContext } from '../store/globalState';
 import { deleteItem } from '../store/actions';
@@ -23,26 +23,41 @@ const Modal = () => {
   const deleteCategories = (item) => {
     deleteData(`categories/${item.id}`, auth.token)
     .then(res => {
-        if(res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.error }})
+        if(res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.error } })
 
         dispatch(deleteItem(item.data, item.id, item.type))
-        return dispatch({ type: 'NOTIFY', payload: { success: res.message }})
+        return dispatch({ type: 'NOTIFY', payload: { success: res.message } })
     })
   }
 
   const deleteProduct = (item) => {
-    dispatch({type: 'NOTIFY', payload: { loading: true }})
+    dispatch({ type: 'NOTIFY', payload: { loading: true } })
     deleteData(`product/${item.id}`, auth.token)
     .then(res => {
-        if(res.err) return dispatch({type: 'NOTIFY', payload: { error: res.error }})
-        dispatch({type: 'NOTIFY', payload: { success: res.message }})
+        if(res.err) return dispatch({ type: 'NOTIFY', payload: { error: res.error } })
+        dispatch({ type: 'NOTIFY', payload: { success: res.message } })
         return router.push('/')
     })
   }
 
   const handleSubmit = () => {
-    dispatch(deleteItem(modal.data, modal.id, "ADD_CART"))
-    dispatch({ type: "ADD_MODAL", payload: {} })
+    if (modal.length !== 0) {
+      for (const item of modal) {
+        if (item.type === "ADD_CART") {
+          dispatch(deleteItem(item.data, item.id, item.type))
+        }
+        if (item.type === "ADD_USERS") {
+          deleteUser(item)
+        }
+        if (item.type === "ADD_CATEGORIES") {
+          deleteCategories(item)
+        }
+        if (item.type === "DELETE_PRODUCT") {
+          deleteProduct(item)
+        }
+        dispatch({ type: "ADD_MODAL", payload: [] })
+      }
+    }
   }
 
   return (
@@ -54,7 +69,7 @@ const Modal = () => {
         <div className="modal-content">
           <div className="modal-header">
               <h5 className="modal-title text-capitalize" id="exampleModalLabel">
-                  {modal.title}
+                  {modal.length !== 0 && modal[0].title}
               </h5>
               <button
                 type="button" className="close" data-dismiss="modal"

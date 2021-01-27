@@ -1,18 +1,22 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { DataContext } from '../store/globalState';
 import { CartItem } from '../components';
-import { getData } from '../utils/fetchData';
+import { getData, postData } from '../utils/fetchData';
 
 
 const Cart = () => {
+  const router = useRouter()
+
   const { state, dispatch } = useContext(DataContext)
-  const { cart, auth } = state
+  const { cart, auth, orders } = state
 
   const [ total, setTotal ] = useState(0)
   const [ address, setAddress ] = useState("")
   const [ mobile, setMobile ] = useState("")
+  const [ callback, setCallback ] = useState(false)
 
   const inputAddress = useCallback((e) => {
     setAddress(e.target.value)
@@ -21,15 +25,6 @@ const Cart = () => {
   const inputMobile = useCallback((e) => {
     setMobile(e.target.value)
   },[setMobile])
-
-  if (cart.length === 0) {
-    return (
-      <div className="text-center">
-        <img className="img-responsive w-100" src="/shopping-image.jpg" alt="cart image"/>
-        <h4 className="text-info">Currently the cart is empty</h4>
-      </div>
-    )
-  }
 
   useEffect(() => {
     const getTotal = () => {
@@ -65,7 +60,53 @@ const Cart = () => {
       }
       updateCart()
     }
-  },[])
+  },[callback])
+
+  const handlePayment = async (e) => {
+    e.preventDefault()
+    if (!address || !mobile) {
+      return dispatch({ type: "NOTIFY", payload: { error: "Please add your address and mobile." } })
+    }
+
+    let newCart = []
+    for (const item of cart) {
+      const res = await getData(`product/${item._id}`)
+      if (res.product.inStock - item.quantity >= 0) {
+        newCart.push(item)
+      }
+    }
+
+    if (newCart.length < cart.length) {
+      setCallback(!callback)
+      return dispatch({
+        type: "NOTIFY",
+        payload: { error: "The product is out of stock or the quantity is insufficient." }
+      })
+    }
+    dispatch({ type: "NOTIFY", payload: { loading: true } })
+    postData("order", { address, mobile, cart, total }, auth.token).then((res) => {
+      if (res.error) {
+        return dispatch({ type: "NOTIFY", payload: { error: res.error } })
+      }
+      dispatch({ type: "ADD_CART", payload: [] })
+      const newOrder = {
+        ...res.newOrder,
+        user: auth.user
+      }
+      dispatch({ type: "ADD_ORDERS", payload: [...orders, newOrder] })
+      dispatch({ type: "NOTIFY", payload: { success: res.message } })
+      return router.push(`/order/${res.newOrder._id}`)
+    })
+  }
+
+  if (cart.length === 0) {
+    return (
+      <div className="text-center" style={{ margin: "100px auto" }}>
+        <img className="img-responsive w-100" src="/shopping-image.jpg" alt="cart image"/>
+        <h4 className="text-info">Currently the cart is empty</h4>
+      </div>
+    )
+  }
 
   return (
     <div className="row mx-auto">
@@ -87,7 +128,7 @@ const Cart = () => {
           </tbody>
         </table>
       </div>
-      <div className="col-md-4 my-3 text-uppercase text-secondary">
+      <div className="col-md-4 my-3 text-right text-uppercase text-secondary">
         <form>
           <h2>shipping</h2>
           <label htmlFor="address">Address</label>
@@ -104,9 +145,9 @@ const Cart = () => {
           />
         </form>
         <h3>Total: <span className="text-danger">{`¥ ${total.toLocaleString()}`}</span></h3>
-        <Link href={auth.user ? "#!" : "/signin"}>
-          <a className="btn btn-dark my-2">Password with payment</a>
-        </Link>
+          <Link href={auth.user ? "#!" : "/signin"}>
+            <a className="btn btn-dark my-2" onClick={handlePayment}>Proceed with payment</a>
+          </Link>
       </div>
     </div>
   )
