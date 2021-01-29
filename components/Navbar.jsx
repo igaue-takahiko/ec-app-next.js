@@ -31,6 +31,14 @@ const Navbar = () => {
       <Link href="/users">
         <a className="dropdown-item">Users</a>
       </Link>
+      <div className="dropdown-divider" />
+      <Link href="/create">
+        <a className="dropdown-item">Products</a>
+      </Link>
+      <div className="dropdown-divider" />
+      <Link href="/categories">
+        <a className="dropdown-item">Categories</a>
+      </Link>
       </>
     )
   }
@@ -53,8 +61,8 @@ const Navbar = () => {
         <Link href="/profile">
           <a className="dropdown-item" style={{ cursor: "pointer" }} >Profile</a>
         </Link>
-        {auth.user.role === "admin" && adminRouter()}
         <div className="dropdown-divider" />
+        {auth.user.role === "admin" && adminRouter()}
         <button className="dropdown-item" style={{ cursor: "pointer" }} onClick={handleLogout}>Logout</button>
       </div>
     </li>
@@ -102,7 +110,8 @@ const Navbar = () => {
                 <li className="nav-item">
                   <Link href="/signin">
                     <a className={"nav-link" + isActive("/signin")}>
-                      <i className="fas fa-user" aria-hidden="true" /> Sign in
+                      <i className="fas fa-user" aria-hidden="true" />
+                      {" Sign in"}
                     </a>
                   </Link>
                 </li>

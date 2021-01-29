@@ -15,8 +15,9 @@ export default async (req, res) => {
 const deliveredOrder = async (req, res) => {
   try {
     const result = await auth(req, res);
-    if (result.role !== "admin")
+    if (result.role !== "admin") {
       return res.status(400).json({ error: "Authentication is not valid." });
+    }
     const { id } = req.query;
 
     const order = await Orders.findOne({ _id: id });

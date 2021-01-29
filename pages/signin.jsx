@@ -1,13 +1,18 @@
 import React,{ useState, useContext, useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Cookie from 'js-cookie';
+
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
-import Cookie from 'js-cookie';
-import { useRouter } from 'next/router';
+
+const initialState = {
+  email: "",
+  password: ""
+}
 
 const Signin = () => {
-  const initialState = { email: "", password: "" }
   const router = useRouter()
 
     const [ userData, setUserData ] = useState(initialState)

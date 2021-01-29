@@ -1,13 +1,20 @@
-import React, { useState, useCallback, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
 import valid from '../utils/valid';
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
 
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  cf_password: ""
+}
+
 const Register = () => {
-  const initialState = { name: "", email: "", password: "", cf_password: "" }
   const router = useRouter()
 
   const [ userData, setUserData ] = useState(initialState)
@@ -16,11 +23,11 @@ const Register = () => {
   const { state, dispatch } = useContext(DataContext)
   const { auth } = state
 
-  const handleChangeInput = useCallback((e) => {
-      const { name, value } = e.target
-      setUserData({ ...userData, [name]: value })
-      dispatch({ type: "NOTIFY", payload: {} })
-  },[userData])
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target
+    setUserData({ ...userData, [name]: value })
+    dispatch({ type: "NOTIFY", payload: {} })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
