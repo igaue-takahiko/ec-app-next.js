@@ -138,14 +138,14 @@ const Profile = () => {
             <label htmlFor="password">New Password</label>
             <input
               className="form-control" type="password" name="password" value={password}
-              placeholder="Your new password" onChange={handleChange}
+              placeholder="Your new password" onChange={handleChange} autoComplete="off"
             />
           </div>
           <div className="form-group">
             <label htmlFor="cf_password">Confirm New Password</label>
             <input
               className="form-control" type="password" name="cf_password" value={cf_password}
-              placeholder="Confirm new password" onChange={handleChange}
+              placeholder="Confirm new password" onChange={handleChange} autoComplete="off"
             />
           </div>
           <button

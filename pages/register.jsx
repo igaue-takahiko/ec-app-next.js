@@ -7,15 +7,17 @@ import valid from '../utils/valid';
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
 
-const initialState = {
-  name: "",
-  email: "",
-  password: "",
-  cf_password: ""
-}
+
 
 const Register = () => {
   const router = useRouter()
+
+  const initialState = {
+    name: "",
+    email: "",
+    password: "",
+    cf_password: ""
+  }
 
   const [ userData, setUserData ] = useState(initialState)
   const { name, email, password, cf_password } = userData
@@ -41,7 +43,8 @@ const Register = () => {
     if (res.error) {
       return dispatch({ type: "NOTIFY", payload: { error: res.error } })
     }
-    return dispatch({ type: "NOTIFY", payload: { success: res.message } })
+    dispatch({ type: "NOTIFY", payload: { success: res.message } })
+    return router.push("/")
   }
 
   useEffect(() => {
@@ -74,14 +77,14 @@ const Register = () => {
             <label htmlFor="exampleInputPassword1">Password</label>
             <input
               type="password" className="form-control" id="exampleInputPassword1"
-              name="password" value={password} onChange={handleChangeInput}
+              name="password" value={password} onChange={handleChangeInput} autoComplete="off"
             />
         </div>
         <div className="form-group">
             <label htmlFor="exampleInputPassword2">Confirm Password</label>
             <input
               type="password" className="form-control" id="exampleInputPassword2"
-              name="cf_password" value={cf_password} onChange={handleChangeInput}
+              name="cf_password" value={cf_password} onChange={handleChangeInput} autoComplete="off"
             />
         </div>
         <button type="submit" className="btn btn-dark w-100">Register</button>

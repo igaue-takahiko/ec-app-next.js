@@ -31,7 +31,7 @@ const ProductsManager = () => {
   useEffect(() => {
     if (id) {
       setOnEdit(true)
-      getData(`/product/${id}`).then((res) => {
+      getData(`product/${id}`).then((res) => {
         setProduct(res.product)
         setImages(res.product.images)
       })

@@ -41,7 +41,8 @@ const CartItem = ({ item, dispatch, cart }) => {
           disabled={item.quantity === item.inStock ? true : false}
         > + </button>
       </td>
-      <td className="align-middle" style={{ minWidth: 50, cursor: "pointer" }}
+      <td
+        className="align-middle" style={{ minWidth: 50, cursor: "pointer" }}
         onClick={() => dispatch({
             type: "ADD_MODAL",
             payload: [{ data: cart, id: item._id, title: item.title, type: "ADD_CART" }]

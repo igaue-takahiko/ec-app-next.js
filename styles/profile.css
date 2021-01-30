@@ -46,3 +46,11 @@
 ::-webkit-file-upload-button {
   cursor: pointer;
 }
+
+/* ----------- Edit User ------------- */
+.edit_user {
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+  border: 1px solid #eeeeee;
+}
