@@ -91,6 +91,7 @@ const Profile = () => {
         token: auth.token,
         user: res.user,
       } })
+      setData(initialState)
       return dispatch({ type: "NOTIFY", payload: { success: res.message } })
     })
   }

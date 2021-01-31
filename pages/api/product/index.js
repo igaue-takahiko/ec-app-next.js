@@ -76,10 +76,10 @@ const getProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const result = auth(req, res);
-    if (result.role !== "admin") {
-      return res.status(400).json({ error: "Authentication is not valid." });
-    }
+    // const result = auth(req, res);
+    // if (result.role !== "admin") {
+    //   return res.status(400).json({ error: "Authentication is not valid." });
+    // }
 
     const {
       title,

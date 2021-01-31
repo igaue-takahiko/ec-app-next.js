@@ -7,23 +7,27 @@ import valid from '../utils/valid';
 import { DataContext } from '../store/globalState';
 import { postData } from '../utils/fetchData';
 
-
+const initialState = {
+  name: "",
+  email: "",
+  password: "",
+  cf_password: ""
+}
 
 const Register = () => {
   const router = useRouter()
-
-  const initialState = {
-    name: "",
-    email: "",
-    password: "",
-    cf_password: ""
-  }
 
   const [ userData, setUserData ] = useState(initialState)
   const { name, email, password, cf_password } = userData
 
   const { state, dispatch } = useContext(DataContext)
   const { auth } = state
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) {
+      router.push("/")
+    }
+  },[auth])
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target
@@ -46,12 +50,6 @@ const Register = () => {
     dispatch({ type: "NOTIFY", payload: { success: res.message } })
     return router.push("/")
   }
-
-  useEffect(() => {
-    if (Object.keys(auth).length !== 0) {
-      router.push("/")
-    }
-  },[auth])
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import mongoose from "mongodb";
+import mongoose from 'mongoose';
 
 const CategoriesSchema = new mongoose.Schema(
   {
@@ -13,7 +13,6 @@ const CategoriesSchema = new mongoose.Schema(
   }
 );
 
-let Dataset =
-  mongoose.models.categories || mongoose.model("categories", CategoriesSchema);
+let Dataset = mongoose.models.categories || mongoose.model("categories", CategoriesSchema);
 
 export default Dataset;

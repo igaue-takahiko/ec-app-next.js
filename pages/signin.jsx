@@ -21,6 +21,12 @@ const Signin = () => {
   const { state, dispatch } = useContext(DataContext)
   const { auth } = state
 
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) {
+      router.push("/")
+    }
+  },[auth])
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target
     setUserData({ ...userData, [name]: value })
@@ -49,12 +55,6 @@ const Signin = () => {
     })
     localStorage.setItem('firstLogin', true)
   }
-
-  useEffect(() => {
-    if (Object.keys(auth).length !== 0) {
-      router.push("/")
-    }
-  },[auth])
 
   return (
       <div>

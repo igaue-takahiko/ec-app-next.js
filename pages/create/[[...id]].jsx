@@ -125,8 +125,13 @@ const ProductsManager = () => {
       if (res.error) {
         return dispatch({ type: "NOTIFY", payload: { error: res.error } })
       }
+      setProduct(initialState)
     }
     return dispatch({ type: "NOTIFY", payload: { success: res.message } })
+  }
+
+  if (!auth.user) {
+    return null
   }
 
   return (
@@ -163,7 +168,7 @@ const ProductsManager = () => {
           />
           <textarea
             className="d-block my-4 w-100 p-2" id="content"
-            name="content" cols="30" rows="4" value={content}
+            name="content" cols="30" rows="6" value={content}
             placeholder="Content" onChange={handleChangeInput}
           />
           <div className="input-group-prepend px-0 my-2">
