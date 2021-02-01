@@ -1,4 +1,5 @@
 export { default as CartItem } from './CartItem';
+export { default as Filter } from './Filter';
 export { default as OrderDetailItem } from './OrderDetailItem';
 export { default as Layout } from './Layout';
 export { default as Loading } from './Loading';

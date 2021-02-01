@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { DataContext } from '../store/globalState';
 import { getData } from '../utils/fetchData';
 import filterSearch from '../utils/filterSearch';
-import { ProductItem } from '../components';
+import { ProductItem, Filter } from '../components';
 
 const Home = (props) => {
   const router = useRouter()
@@ -38,7 +38,7 @@ const Home = (props) => {
 
   const handleCheckALL = () => {
     products.forEach(product => {
-      product.checkes = !isCheck
+      product.checked = !isCheck
     })
     setProducts([...products])
     setIsCheck(!isCheck)
@@ -51,7 +51,7 @@ const Home = (props) => {
         deleteArr.push({
           data: "",
           id: product._id,
-          title: "Detele all selectes products ?",
+          title: "Delete all selected products ?",
           type: "DELETE_PRODUCT"
         })
       }
@@ -69,6 +69,7 @@ const Home = (props) => {
       <Head>
         <title>Home Page</title>
       </Head>
+      <Filter state={state} />
       {auth.user && auth.user.role === "admin" && (
         <div
           className="delete_all btn btn-danger mt-2"
