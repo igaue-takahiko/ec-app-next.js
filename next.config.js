@@ -1,6 +1,10 @@
 module.exports = {
   env: {
+<<<<<<< HEAD
     BASE_URL: "https://ec-app-next-js.vercel.app/",
+=======
+    BASE_URL: "https://ec-app-next-js.vercel.app",
+>>>>>>> @{-1}
     MONGODB_URL:
       "mongodb+srv://igaue-takahiko:2610Taka@cluster0.uoav3.mongodb.net/nextjs_ec-app?retryWrites=true&w=majority",
     ACCESS_TOKEN_SECRET: '".^t7{+N[<(hmXmBCN4sW]h~[=/J?K$cML+Z2L*V#:GEK5}h',
